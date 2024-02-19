@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React, { useState } from 'react';
+import './components/style.css';
+import './App.css'
+import OrderForm from './components/orderForm';
+import OrderList from './components/orderList';
 
-function App() {
+const App = () => {
+  const [orders, setOrders] = useState([]);
+
+  const handleAddOrder = (newOrder) => {
+    setOrders([...orders, newOrder]);
+    localStorage.setItem('order', JSON.stringify([...orders, newOrder]));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>Restaurant Order Management</h1>
+      <div className="row">
+        <div className="col">
+          <OrderForm onAddOrder={handleAddOrder} />
+        </div>
+        <div className="col">
+          <OrderList />
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
+
+
