@@ -1,10 +1,11 @@
 body {
     font-family: Arial, sans-serif;
+    background-color:  #f0f3f4;
   }
   
   .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 10px;
   }
   
   h2 {
@@ -15,6 +16,13 @@ body {
     width: 100%;
     margin-bottom: 10px;
     padding: 8px;
+    margin: 4px;
+  }
+  input[type='number'] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    margin: 4px;
   }
   
   button {
@@ -23,6 +31,7 @@ body {
     color: #fff;
     border: none;
     cursor: pointer;
+    margin: 4px;
   }
   
   button:hover {

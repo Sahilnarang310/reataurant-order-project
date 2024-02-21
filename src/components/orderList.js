@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 const OrderList = () => {
@@ -10,9 +11,9 @@ const OrderList = () => {
   });
 
   useEffect(() => {
-    const storedOrder = localStorage.getItem('order');
-    if (storedOrder) {
-      setOrders([JSON.parse(storedOrder)]);
+    const storedOrders = localStorage.getItem('orders');
+    if (storedOrders) {
+      setOrders(JSON.parse(storedOrders));
     }
   }, []);
 
@@ -25,19 +26,31 @@ const OrderList = () => {
   const handleSaveEdit = () => {
     const updatedOrders = [...orders];
     updatedOrders[editIndex] = editedOrder;
-    localStorage.setItem('order', JSON.stringify(updatedOrders[editIndex]));
+    localStorage.setItem('orders', JSON.stringify(updatedOrders));
     setOrders(updatedOrders);
     setEditIndex(null);
   };
 
-  const handleDeleteOrder = () => {
-    localStorage.removeItem('order');
-    setOrders([]);
+  const handleDeleteOrder = (index) => {
+    const updatedOrders = [...orders];
+    updatedOrders.splice(index, 1);
+    localStorage.setItem('orders', JSON.stringify(updatedOrders));
+    setOrders(updatedOrders);
+    setEditIndex(null);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedOrder({ ...editedOrder, [name]: value });
+  };
+
+  const handleCancelEdit = () => {
+    setEditIndex(null);
+    setEditedOrder({
+      tableNo: '',
+      dish: '',
+      price: '',
+    });
   };
 
   return (
@@ -66,6 +79,7 @@ const OrderList = () => {
                 onChange={handleChange}
               />
               <button onClick={handleSaveEdit}>Save Edit</button>
+              <button onClick={handleCancelEdit}>Cancel</button>
             </div>
           ) : (
             <div>
@@ -73,7 +87,7 @@ const OrderList = () => {
               <p>Dish: {order.dish}</p>
               <p>Price: {order.price}</p>
               <button onClick={() => handleEditOrder(index)}>Edit Order</button>
-              <button onClick={handleDeleteOrder}>Delete Order</button>
+              <button onClick={() => handleDeleteOrder(index)}>Delete Order</button>
             </div>
           )}
         </div>
@@ -83,3 +97,4 @@ const OrderList = () => {
 };
 
 export default OrderList;
+
